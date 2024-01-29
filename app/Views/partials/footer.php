@@ -132,5 +132,7 @@
 <script src="<?= base_url('assets/vendor/aos/aos.js') ?>"></script>
 <script src="<?= base_url('assets/vendor/php-email-form/validate.js') ?>"></script>
 
+<?= $this->renderSection('js') ?>
+
 <!-- Template Main JS File -->
 <script src="<?= base_url('assets/js/main.js') ?>"></script>
