@@ -16,4 +16,10 @@ class HomeFetch extends BaseController
     {
         return view('_partials/_trending');
     }
+
+    public function recent()
+    {
+        // sleep(5);
+        return view('_partials/_recent');
+    }
 }

@@ -27,6 +27,9 @@
     <!-- Template Main CSS Files -->
     <link href="<?= base_url('assets/css/variables.css') ?>" rel="stylesheet">
     <link href="<?= base_url('assets/css/main.css') ?>" rel="stylesheet">
+
+    <?= $this->renderSection('css') ?>
+
 </head>
 
 <body>
