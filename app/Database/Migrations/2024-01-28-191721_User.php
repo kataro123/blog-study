@@ -12,7 +12,7 @@ class User extends Migration
         $this->forge->addField([
             'id' => [
                 'type' => 'int',
-                'constraint' => '5',
+                'null' => false,
                 'unsigned' => true,
                 'auto_increment' => true
             ],
@@ -24,6 +24,11 @@ class User extends Migration
             'lastName' => [
                 'type' => 'VARCHAR',
                 'null' => false,
+                'constraint' => 100
+            ],
+            'image' => [
+                'type' => 'VARCHAR',
+                'null' => true,
                 'constraint' => 100
             ],
             'email' => [

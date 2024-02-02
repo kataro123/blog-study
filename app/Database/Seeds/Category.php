@@ -10,8 +10,27 @@ class Category extends Seeder
     public function run()
     {
         $faker = Factory::create('fr_FR');
+        $data = [
+            'name' => 'Culture',
+            'slug' => 'culture'
+        ];
 
-        for ($i = 0; $i < 100; $i++) {
+        $this->db->table('categories')->insert($data);
+
+        $data = [
+            'name' => 'Business',
+            'slug' => 'business'
+        ];
+
+        $this->db->table('categories')->insert($data);
+        $data = [
+            'name' => 'Lifestyle',
+            'slug' => 'lifestyle'
+        ];
+
+        $this->db->table('categories')->insert($data);
+
+        for ($i = 1; $i <= 10; $i++) {
             $department = $faker->departmentName;
             $data = [
                 'name' => $department,

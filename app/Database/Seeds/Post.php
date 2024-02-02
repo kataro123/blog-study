@@ -13,13 +13,14 @@ class Post extends Seeder
         $faker = Factory::create('pt_BR');
         $faker->addProvider(new PicsumPhotosProvider($faker));
 
-        for ($i = 0; $i <= 100; $i++) {
+        for ($i = 0; $i <= 10000; $i++) {
             $titulo = $faker->sentence;
             $data = [
                 'user_id' => $faker->numberBetween(1, 99),
-                'category_id' => $faker->numberBetween(1, 100),
+                'category_id' => $faker->numberBetween(1, 13),
                 'title' => $titulo,
                 'slug' => strtolower(str_replace('.', '', str_replace(' ', '-', $titulo))),
+                'visits' => $faker->numberBetween(1, 100),
                 'image' => $faker->imageUrl(),
                 'description' => $faker->paragraph(5)
             ];

@@ -27,6 +27,7 @@
     <!-- Template Main CSS Files -->
     <link href="<?= base_url('assets/css/variables.css') ?>" rel="stylesheet">
     <link href="<?= base_url('assets/css/main.css') ?>" rel="stylesheet">
+    <link rel="stylesheet" href="<?= base_url('assets/css/placeholders.css'); ?>">
 
     <?= $this->renderSection('css') ?>
 
@@ -39,6 +40,10 @@
     </main>
 
     <?= $this->include('partials/footer') ?>
+
+    <script type="module">
+        import 'https://unpkg.com/@github/include-fragment-element';
+    </script>
 </body>
 
 </html>
