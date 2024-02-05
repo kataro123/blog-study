@@ -1,0 +1,83 @@
+<?php
+
+namespace App\Models;
+
+use CodeIgniter\Model;
+use stdClass;
+
+class Comment extends Model
+{
+    protected $table            = 'comments';
+    protected $primaryKey       = 'id';
+    protected $useAutoIncrement = true;
+    protected $returnType       = 'object';
+    protected $useSoftDeletes   = false;
+    protected $protectFields    = true;
+    protected $allowedFields    = [];
+
+    protected bool $allowEmptyInserts = false;
+
+    // Dates
+    protected $useTimestamps = false;
+    protected $dateFormat    = 'datetime';
+    protected $createdField  = 'created_at';
+    protected $updatedField  = 'updated_at';
+    protected $deletedField  = 'deleted_at';
+
+    // Validation
+    protected $validationRules      = [];
+    protected $validationMessages   = [];
+    protected $skipValidation       = false;
+    protected $cleanValidationRules = true;
+
+    // Callbacks
+    protected $allowCallbacks = true;
+    protected $beforeInsert   = [];
+    protected $afterInsert    = [];
+    protected $beforeUpdate   = [];
+    protected $afterUpdate    = [];
+    protected $beforeFind     = [];
+    protected $afterFind      = [];
+    protected $beforeDelete   = [];
+    protected $afterDelete    = [];
+
+
+    public function comments(int $postId)
+    {
+        $comments = $this->select('comments.id,comments.comment,users.id as userId, users.firstName as userFirstName, users.lastName as userLastName, users.image as userAvatar, comments.created_at')
+            ->join('users', 'users.id = comments.user_id')
+            ->where('post_id', $postId)
+            ->findAll();
+
+        if (!$comments) {
+            return [];
+        }
+
+        $commentsIds = [];
+        foreach ($comments as $comment) {
+            $commentsIds[] = $comment->id;
+        }
+
+        $replies = (new Reply)->replies($commentsIds);
+
+        $commentsData = new stdClass;
+        foreach ($comments as $index => $comment) {
+            $comment->isAuthor = !session()->has('auth') ? false : (session()->get('user')->id === $comment->userId ? true : false);
+            $commentsData->comments[] = $comment;
+            // $commentsData->comments[$index]->isAuthor = !session()->has('auth') ? false : (session()->get('user')->id === $comment->userId ? true : false);
+            foreach ($replies as $indexR => $reply) {
+                if ($comment->id === $reply->comment_id) {
+                    $reply->isAuthor = !session()->has('auth') ? false : (session()->get('user')->id === $reply->userId ? true : false);
+                    $commentsData->comments[$index]->replies[] = $reply;
+                    // $commentsData->comments[$index]->replies[$indexR]->isAuthor = !session()->has('auth') ? false : (session()->get('user')->id === $reply->userId ? true : false);
+                }
+            }
+        }
+
+        // echo '<pre>';
+        // var_dump($commentsData);
+        // echo '<pre>';
+
+        return $commentsData;
+    }
+}

@@ -1,4 +1,7 @@
 <?php
+
+use CodeIgniter\I18n\Time;
+
 $this->extend('master');
 
 $this->section('content');
@@ -21,78 +24,87 @@ $this->section('content');
                 </div><!-- End Single Post Content -->
 
                 <!-- ======= Comments ======= -->
-                <div class="comments">
-                    <h5 class="comment-title py-4">2 Comments</h5>
-                    <div class="comment d-flex mb-4">
-                        <div class="flex-shrink-0">
-                            <div class="avatar avatar-sm rounded-circle">
-                                <img class="avatar-img" src="/assets/img/person-5.jpg" alt="" class="img-fluid">
-                            </div>
-                        </div>
-                        <div class="flex-grow-1 ms-2 ms-sm-3">
-                            <div class="comment-meta d-flex align-items-baseline">
-                                <h6 class="me-2">Jordan Singer</h6>
-                                <span class="text-muted">2d</span>
-                            </div>
-                            <div class="comment-body">
-                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Non minima ipsum at amet doloremque qui magni, placeat deserunt pariatur itaque laudantium impedit aliquam eligendi repellendus excepturi quibusdam nobis esse accusantium.
-                            </div>
+                <?php if ($comments) { ?>
+                    <div class="comments">
+                        <h5 class="comment-title py-4"><?= count($comments->comments) ?> Comments</h5>
 
-                            <div class="comment-replies bg-light p-3 mt-3 rounded">
-                                <h6 class="comment-replies-title mb-4 text-muted text-uppercase">2 replies</h6>
+                        <?php foreach ($comments->comments as $comment) { ?>
 
-                                <div class="reply d-flex mb-4">
-                                    <div class="flex-shrink-0">
-                                        <div class="avatar avatar-sm rounded-circle">
-                                            <img class="avatar-img" src="/assets/img/person-4.jpg" alt="" class="img-fluid">
-                                        </div>
-                                    </div>
-                                    <div class="flex-grow-1 ms-2 ms-sm-3">
-                                        <div class="reply-meta d-flex align-items-baseline">
-                                            <h6 class="mb-0 me-2">Brandon Smith</h6>
-                                            <span class="text-muted">2d</span>
-                                        </div>
-                                        <div class="reply-body">
-                                            Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                                        </div>
+                            <div class="comment d-flex mb-4">
+                                <div class="flex-shrink-0">
+                                    <div class="avatar avatar-sm rounded-circle">
+                                        <img class="avatar-img" src="<?= $comment->userAvatar ?>" alt="" class="img-fluid">
                                     </div>
                                 </div>
-                                <div class="reply d-flex">
-                                    <div class="flex-shrink-0">
-                                        <div class="avatar avatar-sm rounded-circle">
-                                            <img class="avatar-img" src="/assets/img/person-3.jpg" alt="" class="img-fluid">
-                                        </div>
+                                <div class="flex-grow-1 ms-2 ms-sm-3">
+                                    <div class="comment-meta d-flex align-items-baseline">
+                                        <h6 class="me-2"><?= $comment->userFirstName . ' ' . $comment->userLastName ?></h6>
+                                        <span class="text-muted">
+                                            <?= Time::parse($comment->created_at, 'America/New_York')->humanize() ?>
+                                            <?php if ($comment->isAuthor) { ?>
+                                                <span class="badge bg-dark">My comment <i class="bi bi-star-fill"></i></span>
+
+                                            <?php } else { ?>
+                                                <?php if (session()->has('auth')) { ?>
+                                                    <button type="button" class="btn btn-outline-primary btn-sm btn-reply" data-id="<?= $comment->id ?>">Reply to <?= $comment->userFirstName ?></button>
+                                                <?php } ?>
+                                            <?php } ?>
+                                        </span>
                                     </div>
-                                    <div class="flex-grow-1 ms-2 ms-sm-3">
-                                        <div class="reply-meta d-flex align-items-baseline">
-                                            <h6 class="mb-0 me-2">James Parsons</h6>
-                                            <span class="text-muted">1d</span>
-                                        </div>
-                                        <div class="reply-body">
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio dolore sed eos sapiente, praesentium.
-                                        </div>
+                                    <div class="comment-body">
+                                        <?= $comment->comment ?>
                                     </div>
+                                    <?php if (isset($comment->replies)) { ?>
+
+                                        <div class="comment-replies bg-light p-3 mt-3 rounded">
+                                            <h6 class="comment-replies-title mb-4 text-muted text-uppercase"><?= count($comment->replies) ?> replies</h6>
+
+                                            <?php foreach ($comment->replies as $reply) { ?>
+
+                                                <div class="reply d-flex mb-4">
+                                                    <div class="flex-shrink-0">
+                                                        <div class="avatar avatar-sm rounded-circle">
+                                                            <img class="avatar-img" src="<?= $reply->userAvatar ?>" alt="" class="img-fluid">
+                                                        </div>
+                                                    </div>
+                                                    <div class="flex-grow-1 ms-2 ms-sm-3">
+                                                        <div class="reply-meta d-flex align-items-baseline">
+                                                            <h6 class="mb-0 me-2"><?= $reply->userFirstName . ' ' . $reply->userLastName ?></h6>
+                                                            <span class="text-muted">
+                                                                <?= Time::parse($comment->created_at, 'America/New_York')->humanize() ?>
+                                                                <?php if ($reply->isAuthor) { ?>
+                                                                    <span class="badge bg-dark">My reply <i class="bi bi-star-fill"></i></span>
+                                                                    <?php } else {
+                                                                    if (session()->has('auth')) {
+                                                                    ?>
+                                                                        <button type="button" class="btn btn-outline-primary btn-sm btn-reply" data-id="<?= $comment->id ?>">Reply to <?= $reply->userFirstName ?></button>
+
+                                                                <?php }
+                                                                } ?>
+                                                            </span>
+                                                        </div>
+                                                        <div class=" reply-body">
+                                                            <?= $reply->comment ?>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            <?php } ?>
+
+                                        </div>
+
+                                    <?php } ?>
+
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="comment d-flex">
-                        <div class="flex-shrink-0">
-                            <div class="avatar avatar-sm rounded-circle">
-                                <img class="avatar-img" src="/assets/img/person-2.jpg" alt="" class="img-fluid">
-                            </div>
-                        </div>
-                        <div class="flex-shrink-1 ms-2 ms-sm-3">
-                            <div class="comment-meta d-flex">
-                                <h6 class="me-2">Santiago Roberts</h6>
-                                <span class="text-muted">4d</span>
-                            </div>
-                            <div class="comment-body">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto laborum in corrupti dolorum, quas delectus nobis porro accusantium molestias sequi.
-                            </div>
-                        </div>
-                    </div>
-                </div><!-- End Comments -->
+
+                        <?php } ?>
+
+                    </div><!-- End Comments -->
+                <?php } ?>
+
+
+
 
                 <!-- ======= Comments Form ======= -->
                 <div class="row justify-content-center mt-5">
@@ -118,7 +130,9 @@ $this->section('content');
                             </div>
                         </div>
                     </div>
-                </div><!-- End Comments Form -->
+                </div>
+
+                <!-- End Comments Form -->
 
             </div>
             <div class="col-md-3">
@@ -129,5 +143,9 @@ $this->section('content');
     </div>
 </section>
 
+<?= $this->include('partials/modals/replies.php') ?>
+<?= $this->section('js') ?>
+<script src="<?= base_url('assets/js/replies.js') ?>"></script>
+<?= $this->endSection() ?>
 
 <?php $this->endSection(); ?>

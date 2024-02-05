@@ -10,13 +10,18 @@
         <nav id="navbar" class="navbar">
             <ul>
                 <li><a href="<?= base_url() ?>">Blog</a></li>
-                <li><a href="single-post.html">Single Post</a></li>
-                <li class="dropdown"><a href=""><span>Categories</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+                <li class="dropdown"><a href="#"><span>Categories</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
                     <?= view_cell('App\Cells\CategoryMenu::render', ['view' => 'categoryMenu']); ?>
                 </li>
-
-                <li><a href="about.html">About</a></li>
                 <li><a href="contact.html">Contact</a></li>
+                <?php if (session()->has('auth')) { ?>
+                    <li><a href="<?= url_to('logout') ?>">Logout</a></li>
+                    <li><a href="#">Bem vindo, <?= session()->get('user')->fullName ?></a></li>
+
+                <?php } else { ?>
+                    <li><a href="<?= url_to('login') ?>">Login</a></li>
+
+                <?php } ?>
             </ul>
         </nav><!-- .navbar -->
 

@@ -10,6 +10,15 @@ $routes->get('/search', 'Search::index', ['as' => 'search']);
 
 $routes->get('post/(:any)', 'Post::index/$1');
 
+// Login
+$routes->get('login', 'Login::index', ['as' => 'login']);
+$routes->post('login', 'Login::store', ['as' => 'login.store']);
+$routes->get('register', 'Login::register', ['as' => 'register']);
+$routes->get('logout', 'Login::logout', ['as' => 'logout']);
+
+// Cadastrar Mensagem/Reply
+$routes->post('api/reply', 'Reply::store', ['as' => 'reply.store']);
+
 
 //Rota de fetchs
 $routes->get('banner/home', 'HomeFetch::banner');

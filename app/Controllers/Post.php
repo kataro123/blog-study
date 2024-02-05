@@ -3,8 +3,11 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Models\Comment;
 use App\Models\Post as ModelsPost;
+use App\Models\Reply;
 use CodeIgniter\HTTP\ResponseInterface;
+use stdClass;
 
 class Post extends BaseController
 {
@@ -16,6 +19,8 @@ class Post extends BaseController
             ->join('categories', 'categories.id = posts.category_id')
             ->first();
 
-        return view('post', ['post' => $post]);
+        $comments = (new Comment)->comments($post->id);
+
+        return view('post', ['post' => $post, 'comments' => $comments]);
     }
 }
