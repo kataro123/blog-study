@@ -18,6 +18,7 @@ $routes->get('logout', 'Login::logout', ['as' => 'logout']);
 
 // Cadastrar Mensagem/Reply
 $routes->post('api/reply', 'Reply::store', ['as' => 'reply.store']);
+$routes->post('comment', 'Comment::store', ['as' => 'comment.store', 'filter' => 'csrfThrottle']);
 
 
 //Rota de fetchs
