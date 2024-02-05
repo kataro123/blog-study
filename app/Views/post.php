@@ -71,7 +71,7 @@ $this->section('content');
                                                         <div class="reply-meta d-flex align-items-baseline">
                                                             <h6 class="mb-0 me-2"><?= $reply->userFirstName . ' ' . $reply->userLastName ?></h6>
                                                             <span class="text-muted">
-                                                                <?= Time::parse($comment->created_at, 'America/New_York')->humanize() ?>
+                                                                <?= Time::parse($reply->created_at, 'America/New_York')->humanize() ?>
                                                                 <?php if ($reply->isAuthor) { ?>
                                                                     <span class="badge bg-dark">My reply <i class="bi bi-star-fill"></i></span>
                                                                     <?php } else {
