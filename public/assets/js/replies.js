@@ -39,7 +39,7 @@
             if (response.message === 'replied') {
                 alert('resposta cadastrada com sucesso!');
                 reply.value = '';
-                this.textContent = 'Send Reply';
+                this.innerHTML = 'Send Reply <i class="bi bi-check">';
             }
 
             setTimeout(() => {

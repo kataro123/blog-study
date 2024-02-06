@@ -46,7 +46,7 @@ $this->section('content');
 
                                             <?php } else { ?>
                                                 <?php if (session()->has('auth')) { ?>
-                                                    <button type="button" class="btn btn-outline-primary btn-sm btn-reply" data-id="<?= $comment->id ?>">Reply to <?= $comment->userFirstName ?></button>
+                                                    <button type="button" class="btn btn-outline-primary btn-sm btn-reply" data-id="<?= $comment->id ?>">Reply to <?= $comment->userFirstName ?> <i class="bi bi-send"></i> </button>
                                                 <?php } ?>
                                             <?php } ?>
                                         </span>
@@ -77,7 +77,7 @@ $this->section('content');
                                                                     <?php } else {
                                                                     if (session()->has('auth')) {
                                                                     ?>
-                                                                        <button type="button" class="btn btn-outline-primary btn-sm btn-reply" data-id="<?= $comment->id ?>">Reply to <?= $reply->userFirstName ?></button>
+                                                                        <button type="button" class="btn btn-outline-primary btn-sm btn-reply" data-id="<?= $comment->id ?>">Reply to <?= $reply->userFirstName ?> <i class="bi bi-send"></i> </button>
 
                                                                 <?php }
                                                                 } ?>
@@ -105,39 +105,47 @@ $this->section('content');
 
 
 
+                <?php if (session()->has('auth')) { ?>
+                    <!-- ======= Comments Form ======= -->
+                    <div class="row justify-content-center mt-5">
 
-                <!-- ======= Comments Form ======= -->
-                <div class="row justify-content-center mt-5">
+                        <span class="text-danger" style="font-size: 40px;"><?= session()->get('messageThrottleComment') ?? '' ?></span>
 
-                    <span class="text-danger" style="font-size: 40px;"><?= session()->get('messageThrottleComment') ?? '' ?></span>
+                        <div class="col-lg-12">
+                            <h5 class="comment-title">Leave a Comment</h5>
+                            <form action="<?= url_to('comment.store') ?>" method="post">
+                                <?= csrf_field(); ?>
+                                <div class="row">
+                                    <input type="hidden" name="post_id" value="<?= $post->id; ?>">
+                                    <?php if (session()->has('errorMessage')) { ?>
+                                        <div class="alert alert-danger" style="font-size: 20px;"><?= session()->get('errorMessage')['comment'] ?? '' ?></div>
+                                    <?php }
+                                    if (session()->has('created')) { ?>
+                                        <div class="alert alert-success" style="font-size: 20px;"><?= session()->get('created') ?? '' ?></div>
+                                    <?php }
+                                    if (session()->has('not_created')) { ?>
+                                        <div class="alert alert-danger" style="font-size: 20px;"><?= session()->get('not_created') ?? '' ?></div>
+                                    <?php } ?>
+                                    <div class="col-12 mb-3">
+                                        <label for="comment-message">Message</label>
 
-                    <div class="col-lg-12">
-                        <h5 class="comment-title">Leave a Comment</h5>
-                        <form action="<?= url_to('comment.store') ?>" method="post">
-                            <?= csrf_field(); ?>
-                            <div class="row">
-                                <div class="col-lg-6 mb-3">
-                                    <label for="comment-name">Name</label>
-                                    <input type="text" class="form-control" id="comment-name" placeholder="Enter your name">
+                                        <textarea class="form-control" id="comment-message" name="comment" placeholder="Enter your comment" cols="30" rows="10"></textarea>
+                                    </div>
+                                    <div class="col-12">
+                                        <input type="submit" class="btn btn-primary" value="Post comment">
+                                    </div>
                                 </div>
-                                <div class="col-lg-6 mb-3">
-                                    <label for="comment-email">Email</label>
-                                    <input type="text" class="form-control" id="comment-email" placeholder="Enter your email">
-                                </div>
-                                <div class="col-12 mb-3">
-                                    <label for="comment-message">Message</label>
-
-                                    <textarea class="form-control" id="comment-message" placeholder="Enter your name" cols="30" rows="10"></textarea>
-                                </div>
-                                <div class="col-12">
-                                    <input type="submit" class="btn btn-primary" value="Post comment">
-                                </div>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
-                </div>
 
-                <!-- End Comments Form -->
+                    <!-- End Comments Form -->
+
+                <?php } else { ?>
+                    <div class="alert alert-danger" style="text-align: center;">
+                        Você precisa estar logado para fazer um comentário | <a href="<?= url_to('login') ?>">Login</a>
+                    </div>
+                <?php } ?>
 
             </div>
             <div class="col-md-3">

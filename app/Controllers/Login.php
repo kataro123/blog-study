@@ -11,11 +11,20 @@ class Login extends BaseController
 {
     public function index()
     {
-        return view('login');
+        // echo '<pre>';
+        // var_dump($this->request);
+        // echo '<pre>';
+        // die();
+        if ($this->request->header('Referer')) {
+            return view('login', ['page' => $this->request->header('Referer')->getValue()]);
+        } else {
+            return view('login');
+        }
     }
 
     public function store()
     {
+        $backPage = $this->request->getPost('page');
 
         $validated = $this->validate([
             'email' => 'required|valid_email',
@@ -54,7 +63,7 @@ class Login extends BaseController
         session()->set('auth', true);
         session()->set('user', $userInfo);
 
-        return redirect()->route('home');
+        return redirect()->to((string) $backPage);
     }
 
     public function logout()
@@ -62,6 +71,8 @@ class Login extends BaseController
         session()->remove('user');
         session()->remove('auth');
 
-        return redirect()->route('home');
+        $backPage = (string) ($this->request->header('Referer')->getValue());
+
+        return redirect()->to($backPage);
     }
 }

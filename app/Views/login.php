@@ -18,7 +18,7 @@ echo $this->section('content');
                                 <form method="post" action="<?= url_to('login.store') ?>">
                                     <span class="text-danger"><?= session()->get('error') ?? '' ?></span>
                                     <p>Please login to your account</p>
-
+                                    <input type="hidden" name="page" value="<?= $page ?? '' ?>">
                                     <div class="form-outline mb-4">
                                         <span class="text-danger"><?= session()->get('errors')['email'] ?? '' ?></span>
                                         <input type="email" name="email" value="filipearrudafaga97@gmail.com" id="form2Example11" class="form-control" placeholder="Phone number or email address" />
