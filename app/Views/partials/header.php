@@ -20,6 +20,7 @@
 
                 <?php } else { ?>
                     <li><a href="<?= url_to('login') ?>">Login</a></li>
+                    <li><a href="<?= url_to('register') ?>">Registrar-se</a></li>
 
                 <?php } ?>
             </ul>

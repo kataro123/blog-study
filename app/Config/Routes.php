@@ -11,10 +11,13 @@ $routes->get('/search', 'Search::index', ['as' => 'search']);
 $routes->get('post/(:any)', 'Post::index/$1');
 
 // Login
-$routes->get('login', 'Login::index', ['as' => 'login']);
-$routes->post('login', 'Login::store', ['as' => 'login.store']);
-$routes->get('register', 'Login::register', ['as' => 'register']);
+$routes->get('login', 'Login::index', ['as' => 'login', 'filter' => 'verifyLogged']);
+$routes->post('login', 'Login::store', ['as' => 'login.store', 'filter' => 'verifyLogged']);
 $routes->get('logout', 'Login::logout', ['as' => 'logout']);
+
+// Register
+$routes->get('register', 'Register::index', ['as' => 'register']);
+$routes->post('register', 'Register::store', ['as' => 'register.store', 'filter' => 'verifyLogged']);
 
 // Cadastrar Mensagem/Reply
 $routes->post('api/reply', 'Reply::store', ['as' => 'reply.store']);

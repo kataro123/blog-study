@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Libraries\Login as LibrariesLogin;
 use App\Models\User;
 use CodeIgniter\HTTP\ResponseInterface;
 use stdClass;
@@ -25,6 +26,10 @@ class Login extends BaseController
     public function store()
     {
         $backPage = $this->request->getPost('page');
+
+        if ($backPage === '' || strpos((string)$backPage, '/login')) {
+            $backPage = 'home';
+        }
 
         $validated = $this->validate([
             'email' => 'required|valid_email',
@@ -53,16 +58,11 @@ class Login extends BaseController
             return redirect()->route('login')->with('error', 'Email ou senha inválidos');
         }
 
-        $userInfo = new stdClass;
-        $userInfo->id = $user->id;
-        $userInfo->firstName = $user->firstName;
-        $userInfo->lastName = $user->lastName;
-        $userInfo->email = $user->email;
-        $userInfo->fullName = $user->firstName . ' ' . $user->lastName;
+        LibrariesLogin::login($user);
 
-        session()->set('auth', true);
-        session()->set('user', $userInfo);
-
+        if ($backPage === 'home') {
+            return redirect()->route($backPage);
+        }
         return redirect()->to((string) $backPage);
     }
 
@@ -70,7 +70,6 @@ class Login extends BaseController
     {
         session()->remove('user');
         session()->remove('auth');
-
         $backPage = (string) ($this->request->header('Referer')->getValue());
 
         return redirect()->to($backPage);
