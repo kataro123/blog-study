@@ -14,6 +14,7 @@ class Login
         $userInfo->firstName = $user->firstName;
         $userInfo->lastName = $user->lastName;
         $userInfo->email = $user->email;
+        $userInfo->avatar = $user->image;
         $userInfo->fullName = $user->firstName . ' ' . $user->lastName;
 
         session()->set('auth', true);
