@@ -84,7 +84,7 @@ $this->section('content');
                                                             </span>
                                                         </div>
                                                         <div class=" reply-body">
-                                                            <?= $reply->comment ?>
+                                                            <?= nl2br($reply->comment) ?>
                                                         </div>
                                                     </div>
                                                 </div>

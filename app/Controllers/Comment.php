@@ -29,7 +29,7 @@ class Comment extends BaseController
         $created = (new ModelsComment())->insert([
             'user_id' => session()->get('user')->id,
             'post_id' => $this->request->getPost('post_id'),
-            'comment' => strip_tags((string)$this->request->getPost('comment'))
+            'comment' => strip_tags(trim((string)$this->request->getPost('comment')))
         ]);
 
         ($created) ?

@@ -17,7 +17,7 @@ class Reply extends BaseController
             $replied = (new ModelsReply())->insert([
                 'comment_id' => $data->commentId,
                 'user_id' => session()->get('user')->id,
-                'comment' => $data->reply
+                'comment' => strip_tags(trim($data->reply))
             ]);
 
             return ($replied) ?
