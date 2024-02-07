@@ -16,7 +16,7 @@ class CategorySidebarPartials extends BaseController
             default => ['posts.id', 'desc']
         };
 
-        if (!$postsc = cache('sidebar-' . $category)) {
+        if (!$posts = cache('sidebar-' . $category)) {
 
             $post = new Post();
             $posts = $post->select('posts.image, posts.slug, posts.title, posts.created_at, users.firstName as userFirstName, users.lastName as userLastName, categories.name as categoryName')
@@ -25,7 +25,7 @@ class CategorySidebarPartials extends BaseController
                 ->orderBy($order[0], $order[1])
                 ->findAll(5);
 
-            cache()->save('sidebar-' . $category, $postsc, 300);
+            cache()->save('sidebar-' . $category, $posts, 300);
         }
 
 

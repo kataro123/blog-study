@@ -25,7 +25,7 @@ class Home extends BaseController
 
         // die();
 
-        $this->cachePage(300);
+        // $this->cachePage(300);
 
         $data = [
             'title' => 'Blog Inicial'
