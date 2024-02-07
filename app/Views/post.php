@@ -33,7 +33,7 @@ $this->section('content');
                             <div class="comment d-flex mb-4">
                                 <div class="flex-shrink-0">
                                     <div class="avatar avatar-sm rounded-circle">
-                                        <img class="avatar-img" src="<?= $comment->userAvatar ?>" alt="" class="img-fluid">
+                                        <img class="avatar-img" src="<?= $comment->userAvatar ?? 'https://randomuser.me/api/portraits/lego/5.jpg' ?>" alt="" class="img-fluid">
                                     </div>
                                 </div>
                                 <div class="flex-grow-1 ms-2 ms-sm-3">
@@ -52,7 +52,7 @@ $this->section('content');
                                         </span>
                                     </div>
                                     <div class="comment-body">
-                                        <?= $comment->comment ?>
+                                        <?= nl2br($comment->comment) ?>
                                     </div>
                                     <?php if (isset($comment->replies)) { ?>
 
@@ -64,7 +64,7 @@ $this->section('content');
                                                 <div class="reply d-flex mb-4">
                                                     <div class="flex-shrink-0">
                                                         <div class="avatar avatar-sm rounded-circle">
-                                                            <img class="avatar-img" src="<?= $reply->userAvatar ?>" alt="" class="img-fluid">
+                                                            <img class="avatar-img" src="<?= $reply->userAvatar ?? 'https://randomuser.me/api/portraits/lego/5.jpg' ?>" alt="" class="img-fluid">
                                                         </div>
                                                     </div>
                                                     <div class="flex-grow-1 ms-2 ms-sm-3">
