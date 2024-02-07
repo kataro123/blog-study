@@ -22,7 +22,7 @@ class CategorySidebarPartials extends BaseController
             ->join('categories', 'categories.id = posts.category_id')
             ->orderBy($order[0], $order[1])
             ->findAll(5);
-
-        return view('_partials/_sidebar_tabs', ['posts' => $posts]);
+   ->findAll(5);
+bs', ['posts' => $posts]);
     }
 }
