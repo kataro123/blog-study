@@ -45,6 +45,7 @@ class Register extends BaseController
             'firstName' => strip_tags((string)$this->request->getPost('firstName')),
             'lastName' => strip_tags((string)$this->request->getPost('lastName')),
             'email' => strip_tags((string)$this->request->getPost('email')),
+            'image' => 'https://randomuser.me/api/portraits/lego/5.jpg',
             'password' => strip_tags(password_hash((string)$this->request->getPost('password'), PASSWORD_DEFAULT))
         ]);
 
