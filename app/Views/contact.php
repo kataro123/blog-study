@@ -16,6 +16,7 @@ echo $this->section('content');
 
         <?= session()->getFlashdata('contact_sent') ? "<div class='text text-bg-success text-center p-2 fs-3'>" . session()->getFlashdata('contact_sent') . "</div>" : '' ?>
         <?= session()->getFlashdata('contact_not_sent') ? "<div class='text text-bg-danger text-center p-2 fs-3'>" . session()->getFlashdata('contact_not_sent') . "</div>" : '' ?>
+        <?= session()->getFlashdata('contact_not_sent') ? "<div class='text text-bg-danger text-center p-2 fs-3'>" . session()->getFlashdata('messageThrottle') . "</div>" : '' ?>
 
         <!-- <div class="row gy-4">
 
@@ -47,6 +48,7 @@ echo $this->section('content');
 
         <div class="form mt-5">
             <form action="<?= url_to('contact.store') ?>" method="post" role="form" class="php-email-form">
+                <?= csrf_field(); ?>
                 <div class="row">
                     <div class="form-group col-md-6">
                         <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" value="<?= old('name') ?>">

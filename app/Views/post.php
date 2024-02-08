@@ -109,7 +109,7 @@ $this->section('content');
                     <!-- ======= Comments Form ======= -->
                     <div class="row justify-content-center mt-5">
 
-                        <span class="text-danger" style="font-size: 40px;"><?= session()->get('messageThrottleComment') ?? '' ?></span>
+                        <span class="text-danger" style="font-size: 40px;"><?= session()->get('messageThrottle') ?? '' ?></span>
 
                         <div class="col-lg-12">
                             <h5 class="comment-title">Leave a Comment</h5>

@@ -2,7 +2,7 @@
 
 namespace Config;
 
-use App\Filters\ThrottleComment;
+use App\Filters\Throttler;
 use App\Filters\VerifyLogged;
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Filters\CSRF;
@@ -27,7 +27,7 @@ class Filters extends BaseConfig
         'invalidchars'  => InvalidChars::class,
         'secureheaders' => SecureHeaders::class,
         'csrfThrottle'  => [
-            CSRF::class, ThrottleComment::class
+            CSRF::class, Throttler::class
         ],
         'verifyLogged' => VerifyLogged::class
     ];

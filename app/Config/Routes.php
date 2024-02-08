@@ -25,7 +25,7 @@ $routes->post('comment', 'Comment::store', ['as' => 'comment.store', 'filter' =>
 
 // Contact
 $routes->get('contact', 'Contact::index', ['as' => 'contact']);
-$routes->post('contact', 'Contact::store', ['as' => 'contact.store']);
+$routes->post('contact', 'Contact::store', ['as' => 'contact.store', 'filter' => 'csrfThrottle']);
 
 
 //Rota de fetchs
