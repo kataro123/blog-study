@@ -23,6 +23,10 @@ $routes->post('register', 'Register::store', ['as' => 'register.store', 'filter'
 $routes->post('api/reply', 'Reply::store', ['as' => 'reply.store']);
 $routes->post('comment', 'Comment::store', ['as' => 'comment.store', 'filter' => 'csrfThrottle']);
 
+// Contact
+$routes->get('contact', 'Contact::index', ['as' => 'contact']);
+$routes->post('contact', 'Contact::store', ['as' => 'contact.store']);
+
 
 //Rota de fetchs
 $routes->get('banner/home', 'HomeFetch::banner');

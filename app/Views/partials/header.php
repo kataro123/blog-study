@@ -13,7 +13,7 @@
                 <li class="dropdown"><a href="#"><span>Categories</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
                     <?= view_cell('App\Cells\CategoryMenu::render', ['view' => 'categoryMenu']); ?>
                 </li>
-                <li><a href="contact.html">Contact</a></li>
+                <li><a href="<?= url_to('contact') ?>">Contact</a></li>
                 <?php if (session()->has('auth')) { ?>
                     <li><a href="<?= url_to('logout') ?>">Logout</a></li>
                     <li><a href="#">
