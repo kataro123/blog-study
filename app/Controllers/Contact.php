@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Libraries\Mail;
 use CodeIgniter\HTTP\ResponseInterface;
 
 class Contact extends BaseController
@@ -43,34 +44,21 @@ class Contact extends BaseController
             return redirect()->route('contact')->withInput()->with('errors', $this->validator->getErrors());
         }
 
-        $config = [
-            'protocol' => $_ENV['PROTOCO'],
-            'SMTPHost' => $_ENV['SMTP_HOST'],
-            'SMTPUser' => $_ENV['SMTP_USER'],
-            'SMTPPass' => $_ENV['SMTP_PASS'],
-            'SMTPPort' => $_ENV['SMTP_PORT'],
-            'wordWrap' => true,
-            'mailType' => 'html',
-            'charset' => 'utf-8'
-        ];
-
-        $email = \Config\Services::email();
-
-        $email->initialize($config);
-        $email->setFrom($this->request->getPost('email'), $this->request->getPost('name'));
-        $email->setTo($_ENV['EMAIL_TO']);
-
-        $template = view('emails/contact', [
+        $mail = new Mail;
+        $mail->setFrom([
+            'email' => $this->request->getPost('email'),
+            'name' => $this->request->getPost('name')
+        ]);
+        $mail->setTo($_ENV['EMAIL_TO']);
+        $mail->setSubject((string)$this->request->getPost('subject'));
+        $mail->setTemplate('emails/contact', [
             'name' => 'Filipe Arruda',
             'from' => $this->request->getPost('email'),
             'subject' => $this->request->getPost('subject'),
             'message' => strip_tags(trim((string)$this->request->getPost('message')))
         ]);
 
-        $email->setSubject($this->request->getPost('subject'));
-        $email->setMessage($template);
-
-        ($email->send()) ?
+        ($mail->send()) ?
             session()->setFlashdata('contact_sent', 'Email enviado com sucesso, responderemos em no máximo 24h') :
             session()->setFlashdata('contact_not_sent', 'Ocorreu um erro ao enviar o email, tente novamente em alguns segundos');
 
