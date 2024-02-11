@@ -20,7 +20,6 @@ $routes->get('register', 'Register::index', ['as' => 'register', 'filter' => 'cs
 $routes->post('register', 'Register::store', ['as' => 'register.store', 'filter' => 'verifyLoggedCsrfThrottle']);
 
 // Cadastrar Mensagem/Reply
-$routes->post('api/reply', 'Reply::store', ['as' => 'reply.store']);
 $routes->post('comment', 'Comment::store', ['as' => 'comment.store', 'filter' => 'csrfThrottle']);
 
 // Contact
@@ -29,10 +28,13 @@ $routes->post('contact', 'Contact::store', ['as' => 'contact.store', 'filter' =>
 
 // Profile
 $routes->get('profile', 'Profile::index', ['as' => 'profile', 'filter' => 'verifyNotLogged']);
-$routes->put('api/profile', 'Profile::update', ['as' => 'profile.update', 'filter' => 'csrfThrottleAjax']);
-$routes->put('api/password', 'Profile::updatePassword', ['as' => 'profile.updatePassword', 'filter' => 'csrfThrottleAjax']);
-$routes->post('api/avatar', 'Profile::updateAvatar', ['as' => 'profile.updateAvatar', 'filter' => 'csrfThrottleAjax']);
 
+$routes->group('api', ['filter' => 'verifyNotLoggedCsrfThrottleAjax'], function ($routes) {
+    $routes->post('reply', 'Reply::store', ['as' => 'reply.store']);
+    $routes->put('profile', 'Profile::update', ['as' => 'profile.update']);
+    $routes->put('password', 'Profile::updatePassword', ['as' => 'profile.updatePassword']);
+    $routes->post('avatar', 'Profile::updateAvatar', ['as' => 'profile.updateAvatar']);
+});
 
 //Rota de fetchs
 $routes->get('banner/home', 'HomeFetch::banner');
@@ -41,3 +43,8 @@ $routes->get('recent/home', 'HomeFetch::recent');
 $routes->get('category/sidebar/partials/(:alpha)', 'CategorySidebarPartials::index/$1');
 $routes->get('category/fetch/(:alpha)', 'Category::index/$1');
 $routes->get('category/(:any)', 'Category::getCategoryPosts/$1');
+
+
+$routes->set404Override(function () {
+    return view('error404');
+});

@@ -40,6 +40,11 @@ class Filters extends BaseConfig
             VerifyLogged::class,
             CSRF::class,
             Throttler::class
+        ],
+        'verifyNotLoggedCsrfThrottleAjax' => [
+            VerifyNotLogged::class,
+            CSRF::class,
+            ThrottlerAjax::class
         ]
     ];
 
