@@ -10,6 +10,7 @@ echo $this->section('content');
 
 
             <form method="post" action="<?= url_to('register.store') ?>">
+                <?= csrf_field(); ?>
                 <!-- 2 column grid layout with text inputs for the first and last names -->
                 <div class="row mb-4">
                     <div class="col">

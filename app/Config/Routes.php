@@ -12,12 +12,12 @@ $routes->get('post/(:any)', 'Post::index/$1');
 
 // Login
 $routes->get('login', 'Login::index', ['as' => 'login', 'filter' => 'verifyLogged']);
-$routes->post('login', 'Login::store', ['as' => 'login.store', 'filter' => 'verifyLogged']);
+$routes->post('login', 'Login::store', ['as' => 'login.store', 'filter' => 'verifyLoggedCsrfThrottle']);
 $routes->get('logout', 'Login::logout', ['as' => 'logout']);
 
 // Register
-$routes->get('register', 'Register::index', ['as' => 'register']);
-$routes->post('register', 'Register::store', ['as' => 'register.store', 'filter' => 'verifyLogged']);
+$routes->get('register', 'Register::index', ['as' => 'register', 'filter' => 'csrfThrottle']);
+$routes->post('register', 'Register::store', ['as' => 'register.store', 'filter' => 'verifyLoggedCsrfThrottle']);
 
 // Cadastrar Mensagem/Reply
 $routes->post('api/reply', 'Reply::store', ['as' => 'reply.store']);
@@ -26,6 +26,12 @@ $routes->post('comment', 'Comment::store', ['as' => 'comment.store', 'filter' =>
 // Contact
 $routes->get('contact', 'Contact::index', ['as' => 'contact']);
 $routes->post('contact', 'Contact::store', ['as' => 'contact.store', 'filter' => 'csrfThrottle']);
+
+// Profile
+$routes->get('profile', 'Profile::index', ['as' => 'profile', 'filter' => 'verifyNotLogged']);
+$routes->put('api/profile', 'Profile::update', ['as' => 'profile.update', 'filter' => 'csrfThrottleAjax']);
+$routes->put('api/password', 'Profile::updatePassword', ['as' => 'profile.updatePassword', 'filter' => 'csrfThrottleAjax']);
+$routes->post('api/avatar', 'Profile::updateAvatar', ['as' => 'profile.updateAvatar', 'filter' => 'csrfThrottleAjax']);
 
 
 //Rota de fetchs

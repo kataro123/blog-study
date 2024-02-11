@@ -3,7 +3,9 @@
 namespace Config;
 
 use App\Filters\Throttler;
+use App\Filters\ThrottlerAjax;
 use App\Filters\VerifyLogged;
+use App\Filters\VerifyNotLogged;
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Filters\CSRF;
 use CodeIgniter\Filters\DebugToolbar;
@@ -26,10 +28,19 @@ class Filters extends BaseConfig
         'honeypot'      => Honeypot::class,
         'invalidchars'  => InvalidChars::class,
         'secureheaders' => SecureHeaders::class,
+        'verifyLogged' => VerifyLogged::class,
+        'verifyNotLogged' => VerifyNotLogged::class,
         'csrfThrottle'  => [
             CSRF::class, Throttler::class
         ],
-        'verifyLogged' => VerifyLogged::class
+        'csrfThrottleAjax' => [
+            CSRF::class, ThrottlerAjax::class
+        ],
+        'verifyLoggedCsrfThrottle' => [
+            VerifyLogged::class,
+            CSRF::class,
+            Throttler::class
+        ]
     ];
 
     /**

@@ -16,6 +16,7 @@ echo $this->section('content');
                                 </div>
 
                                 <form method="post" action="<?= url_to('login.store') ?>">
+                                    <?= csrf_field(); ?>
                                     <span class="text-danger"><?= session()->get('error') ?? '' ?></span>
                                     <p>Please login to your account</p>
                                     <input type="hidden" name="page" value="<?= $page ?? '' ?>">

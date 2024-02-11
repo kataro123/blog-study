@@ -15,9 +15,10 @@
                 </li>
                 <li><a href="<?= url_to('contact') ?>">Contact</a></li>
                 <?php if (session()->has('auth')) { ?>
+                    <li><a href="<?= url_to('profile') ?>">Profile</a></li>
                     <li><a href="<?= url_to('logout') ?>">Logout</a></li>
                     <li><a href="#">
-                            <img src="<?= session()->get('user')->avatar; ?>" style="margin-right: 5px;" width="40" class="rounded-circle">
+                            <img src="<?= session()->get('user')->avatar; ?>" style="margin-right: 5px;" width="40" height="40" class="rounded-circle">
                             Bem vindo, <?= session()->get('user')->fullName ?></a></li>
 
                 <?php } else { ?>
