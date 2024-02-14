@@ -26,7 +26,7 @@ $routes->get('reset/(:alphanum)', 'Forgot::edit/$1', ['as' => 'forgot.edit']);
 $routes->post('forgot/update/(:alphanum)', 'Forgot::update/$1', ['as' => 'forgot.update', 'filter' => 'csrfThrottle']);
 
 // Cadastrar Mensagem/Reply
-$routes->post('comment', 'Comment::store', ['as' => 'comment.store', 'filter' => 'csrfThrottle']);
+$routes->post('comment', 'Comment::store', ['as' => 'comment.store']);
 
 // Contact
 $routes->get('contact', 'Contact::index', ['as' => 'contact']);
@@ -35,7 +35,7 @@ $routes->post('contact', 'Contact::store', ['as' => 'contact.store', 'filter' =>
 // Profile
 $routes->get('profile', 'Profile::index', ['as' => 'profile', 'filter' => 'verifyNotLogged']);
 
-$routes->group('api', ['filter' => 'verifyNotLoggedCsrfThrottleAjax'], function ($routes) {
+$routes->group('api', function ($routes) {
     $routes->post('reply', 'Reply::store', ['as' => 'reply.store']);
     $routes->put('profile', 'Profile::update', ['as' => 'profile.update']);
     $routes->put('password', 'Profile::updatePassword', ['as' => 'profile.updatePassword']);
