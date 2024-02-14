@@ -26,7 +26,7 @@ class VerifyLogged implements FilterInterface
     public function before(RequestInterface $request, $arguments = null)
     {
         if (session()->has('auth')) {
-            return redirect()->back();
+            return redirect()->route('home');
         }
     }
 

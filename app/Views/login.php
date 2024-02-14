@@ -12,7 +12,7 @@ echo $this->section('content');
 
                                 <div class="text-center">
                                     <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/lotus.webp" style="width: 185px;" alt="logo">
-                                    <h4 class="mt-1 mb-5 pb-1">We are The Lotus Team</h4>
+                                    <h4 class="mt-1 mb-5 pb-1">The Test Blog</h4>
                                 </div>
 
                                 <form method="post" action="<?= url_to('login.store') ?>">
@@ -35,7 +35,7 @@ echo $this->section('content');
                                     <div class="text-center pt-1 mb-5 pb-1">
                                         <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">Log
                                             in</button>
-                                        <a class="text-muted" href="#!">Forgot password?</a>
+                                        <a class="text-muted" href="<?= url_to('forgot') ?>">Forgot password?</a>
                                     </div>
 
                                     <div class="d-flex align-items-center justify-content-center pb-4">

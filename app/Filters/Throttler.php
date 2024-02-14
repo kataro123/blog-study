@@ -28,7 +28,7 @@ class Throttler implements FilterInterface
     {
         $throttler = Services::throttler();
 
-        if ($throttler->check(md5($request->getIPAddress()), 2, MINUTE) === false) {
+        if ($throttler->check(md5($request->getIPAddress()), 5, MINUTE) === false) {
             // return Services::response()->setStatusCode(429);
             // session()->setFlashdata('message', 'Too many requests');
             return redirect()->back()->with('messageThrottle', 'Too Many Requests');

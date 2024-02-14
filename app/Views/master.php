@@ -41,9 +41,7 @@
 
     <?= $this->include('partials/footer') ?>
 
-    <script type="module">
-        import 'https://unpkg.com/@github/include-fragment-element';
-    </script>
+
 </body>
 
 </html>

@@ -158,6 +158,7 @@ $this->section('content');
 
 <?= $this->include('partials/modals/replies.php') ?>
 <?= $this->section('js') ?>
+<script type="module" src="https://unpkg.com/@github/include-fragment-element"></script>
 <script src="<?= base_url('assets/js/replies.js') ?>"></script>
 <?= $this->endSection() ?>
 

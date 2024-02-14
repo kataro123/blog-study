@@ -19,6 +19,12 @@ $routes->get('logout', 'Login::logout', ['as' => 'logout']);
 $routes->get('register', 'Register::index', ['as' => 'register', 'filter' => 'csrfThrottle']);
 $routes->post('register', 'Register::store', ['as' => 'register.store', 'filter' => 'verifyLoggedCsrfThrottle']);
 
+// Forgot Password
+$routes->get('forgot/password', 'Forgot::index', ['as' => 'forgot', 'filter' => 'verifyLogged']);
+$routes->post('forgot/password', 'Forgot::store', ['as' => 'forgot.store', 'filter' => 'csrfThrottle']);
+$routes->get('reset/(:alphanum)', 'Forgot::edit/$1', ['as' => 'forgot.edit']);
+$routes->post('forgot/update/(:alphanum)', 'Forgot::update/$1', ['as' => 'forgot.update', 'filter' => 'csrfThrottle']);
+
 // Cadastrar Mensagem/Reply
 $routes->post('comment', 'Comment::store', ['as' => 'comment.store', 'filter' => 'csrfThrottle']);
 

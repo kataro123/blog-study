@@ -53,4 +53,8 @@ $this->section('content');
     </div>
 </section>
 
+<?php $this->section('js') ?>
+<script type="module" src="https://unpkg.com/@github/include-fragment-element"></script>
+<?php $this->endSection() ?>
+
 <?php $this->endSection(); ?>
