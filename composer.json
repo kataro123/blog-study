@@ -12,7 +12,8 @@
     "require": {
         "php": "^7.4 || ^8.0",
         "bluemmb/faker-picsum-photos-provider": "^2.0",
-        "codeigniter4/framework": "^4.0"
+        "codeigniter4/framework": "^4.0",
+        "vonage/client": "^4.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9",

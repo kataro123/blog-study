@@ -5,6 +5,9 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Libraries\Mail;
 use CodeIgniter\HTTP\ResponseInterface;
+use Vonage\Client;
+use Vonage\Client\Credentials\Basic;
+use Vonage\SMS\Message\SMS;
 
 class Contact extends BaseController
 {
@@ -58,10 +61,29 @@ class Contact extends BaseController
             'message' => strip_tags(trim((string)$this->request->getPost('message')))
         ]);
 
-        ($mail->send()) ?
-            session()->setFlashdata('contact_sent', 'Email enviado com sucesso, responderemos em no máximo 24h') :
-            session()->setFlashdata('contact_not_sent', 'Ocorreu um erro ao enviar o email, tente novamente em alguns segundos');
+        if ($mail->send()) {
+            session()->setFlashdata('contact_sent', 'Email enviado com sucesso, responderemos em no máximo 24h');
+            $basic = new Basic("1fe59666", "5Rk2iTRrloO07dsK");
+            $client = new Client($basic);
 
+            $response = $client->sms()->send(
+                new SMS('18572370436', '17653090209', 'Voce acaba de receber uma mensagem por email do formulario de contato do seu site.')
+            );
+
+            $message = $response->current();
+
+            if ($message->getStatus() == 0) {
+                return redirect()->route('contact');
+            } else {
+                echo 'failed with status ' . $message->getStatus();
+            }
+        } else {
+            session()->setFlashdata('contact_not_sent', 'Ocorreu um erro ao enviar o email, tente novamente em alguns segundos');
+        }
+
+        // ($mail->send()) ?
+        //     session()->setFlashdata('contact_sent', 'Email enviado com sucesso, responderemos em no máximo 24h') :
+        //     session()->setFlashdata('contact_not_sent', 'Ocorreu um erro ao enviar o email, tente novamente em alguns segundos');
 
         return redirect()->route('contact');
     }
