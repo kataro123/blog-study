@@ -52,13 +52,14 @@ class Contact extends BaseController
             'email' => $this->request->getPost('email'),
             'name' => $this->request->getPost('name')
         ]);
+        $mensagemT = strip_tags(trim((string)$this->request->getPost('message')));
         $mail->setTo($_ENV['EMAIL_TO']);
         $mail->setSubject((string)$this->request->getPost('subject'));
         $mail->setTemplate('emails/contact', [
             'name' => 'Filipe Arruda',
             'from' => $this->request->getPost('email'),
             'subject' => $this->request->getPost('subject'),
-            'message' => strip_tags(trim((string)$this->request->getPost('message')))
+            'message' => $mensagemT
         ]);
 
         if ($mail->send()) {
@@ -67,7 +68,7 @@ class Contact extends BaseController
             $client = new Client($basic);
 
             $response = $client->sms()->send(
-                new SMS('18572370436', '17653090209', 'Voce acaba de receber uma mensagem por email do formulario de contato do seu site.')
+                new SMS('18572370436', '17653090209', "Voce acaba de receber uma mensagem do formulario de contato do seu site.\nNome: {$this->request->getPost('name')} \nemail: {$this->request->getPost('email')} \nSubject: {$this->request->getPost('subject')} \nMensagem: {$mensagemT}", 'unicode')
             );
 
             $message = $response->current();
